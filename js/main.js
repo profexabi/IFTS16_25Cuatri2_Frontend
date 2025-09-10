@@ -1,9 +1,3 @@
-# IFTS16_25Cuatri2_Frontend
-
-## JavaScript I / Conceptos elementales, sintaxis básica, variables, tipos de datos y operadores
-
-- *Recordatorio: vayan practicando con el portafolio*
-```js
 /* Que es JavaScript?
 JavaScript (JS) es un lenguaje de programación que se utiliza para crear páginas web interactivas.
 
@@ -43,33 +37,3 @@ console.log(texto.length); // Object wrappers o envolvedores de objetos (tratar 
 // Operadores de tipo
 console.log(typeof 42);
 console.log(typeof "hola");
-```
----
-
-# Guia JavaScript
-
-## JavaScript VIII / JSON, asincronia, promesas, fetch, async/await y try/catch
-
----
-
-## JavaScript VII / High order functions, destructuring, spread operator, closures, funciones anidadas, callbacks, web apis
-
----
-
-## JavaScript VI / Manipulacion del DOM en JavaScript y Eventos
-
----
-
-## JavaScript V / Objetos, clases y objetos globales. Almacenamiento persistente, iteracion en arrays, iteracion en objetos e iteracion en arrays de objetos
-
----
-
-## JavaScript IV / Introduccion a arrays. Metodos de strings y arrays
-
----
-
-## JavaScript III / Scope y ambito, funciones, tipos de funciones, parametros y argumentos, funciones flecha
-
----
-
-## JavaScript II / Control de flujo, estructuras de control, condicionales y bucles I
