@@ -3,6 +3,12 @@
 
 ---
 
+## Notas cursada
+- Falta repasar JavaScript IV: Arrays, objetos y metodos de strings y arrays
+- De ahi saltamos a JavaScript V
+
+---
+
 
 ## JavaScript IV / Introduccion a arrays. Metodos de strings y arrays
 ```js
@@ -597,7 +603,114 @@ const saludarProfe = nombre => {
 console.log(saludarProfe("Gabi"));
 
 
-// TO DO, falta scope, hoisting y comparacion var, let y const
+
+/*==========================
+    Scope (Ambito)
+============================
+El scope se refiere al contexto en el cual las variables y funciones son accesibles y pueden ser referenciadas
+
+// Global Scope o Ambito global
+    - Las variables declaradas FUERA de cualquier funcion o bloque tienen alcance global y son accesibles desde cualquier parte del codigo
+
+// Local Scope o Function Scope
+    - Las variables declaradas dentro de una funcion solo son accesibles dentro de esa funcion y tienen un ambito local
+
+// Block Scope o Ambito de bloque
+    - A partir de ES6 (JavaScript 2015), las variables let y const tienen alcance de bloque, por lo que solo son accesibles dentro de las {} (bucle, condicional, etc)
+*/
+
+// Global Scope
+var globalLet = "Soy una variable global";
+
+function mostrarGlobal() {
+    console.log(globalLet);
+}
+
+mostrarGlobal();
+console.log(globalLet);
+
+
+// Local Scope
+function mostrarLocal() {
+    var localVar = "Soy local";
+    console.log(localVar);
+}
+
+mostrarLocal();
+// console.log(localVar); // Uncaught ReferenceError: localVar is not defined
+
+
+// Block Scope
+if(true) {
+    let bloqueLet = "Soy de bloque";
+    console.log(bloqueLet);
+}
+
+// console.log(bloqueLet); // Uncaught ReferenceError: bloqueLet is not defined
+
+
+// NOTA: Siempre declaremos variables modernas con let y const
+
+
+
+
+/* ==========================
+    Hoisting (Elevacion)
+=============================
+
+- Las declaraciones de variables y funciones en JS se mueven "hacia arriba" de su contexto de ejecucion (scope).
+Solo las declaraciones son elevadas, no asi las inicializaciones
+
+- var: Las variables se elevan y se inicializan con undefined
+
+- let y const: Las variables se elevan pero NO se inicializan
+*/
+
+console.log(elevadaVar); // undefined
+var elevadaVar = "Soy var elevada";
+console.log(elevadaVar);
+
+
+console.log(elevadaLet); // Uncaught ReferenceError: Cannot access 'elevadaLet' before initialization
+let elevadaLet = "Soy una let elevada";
+console.log(elevadaLet);
+
+
+/* =================================
+    Comparacion var, let y const
+==================================
+
+En resumen, let y const proporcionan un control más preciso sobre el ámbito y el comportamiento de las variables en
+comparación con var . 
+
+Aunque var sigue estando soportado, let y const se recomiendan para código nuevo debido a su ámbito e inmutabilidad mejorados.
+
+Las principales diferencias entre var , let y const en JavaScript son su ámbito, redeclarabilidad y reasignabilidad:
+
+var :
+    • De ámbito de función.
+    • Puede ser redeclarado y reasignado.
+    • Tiene elevación a nivel de función, lo que significa que puede utilizarse antes de la declaración.
+
+let :
+    • De ámbito bloque (dentro de un bucle, una sentencia condicional o una función).
+    • No se puede volver a declarar, pero SI reasignar.
+    • Tiene elevación a nivel de bloque, lo que significa que no es accesible antes de la declaración.
+
+const :
+    • A nivel de bloque (dentro de un bucle, sentencia condicional o función).
+    • No se puede volver a declarar ni reasignar.
+    • Tiene elevación a nivel de bloque, lo que significa que no es accesible antes de la declaración.
+
+Buenas prácticas:
+
+Usa const para variables de sólo lectura, como constantes u objetos inmutables. Utiliza let para variables que puedan
+cambiar con el tiempo, pero que no deban volver a declararse. Evita usar var debido a su ámbito global o de función, que
+puede dar lugar a conflictos y bugs.
+
+// Discusion en stackoverflow con argumentos a favor de const y a favor de let
+https://stackoverflow.com/questions/41086633/in-javascript-why-should-i-usually-prefer-const-to-let
+*/
 ```
 
 ---
@@ -823,7 +936,7 @@ switch (diaSemana) {
 ---
 
 ## JavaScript I / Conceptos elementales, sintaxis básica, variables, tipos de datos y operadores
-
+#### [Operadores en JavaScript](https://www.w3schools.com/js/js_operators.asp)
 - *Recordatorio: vayan practicando con el portafolio*
 ```js
 /* Que es JavaScript?
@@ -883,8 +996,4 @@ console.log(typeof "hola");
 ---
 
 ## JavaScript V / Objetos, clases y objetos globales. Almacenamiento persistente, iteracion en arrays, iteracion en objetos e iteracion en arrays de objetos
-
----
-
-## JavaScript IV / Introduccion a arrays. Metodos de strings y arrays
 
