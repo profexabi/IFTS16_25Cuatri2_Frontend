@@ -1,400 +1,95 @@
-/* ============================
-    Declaracion de funciones
-=============================
-    
-function nombreFuncion() {
-    // Bloque de codigo cuando llamemos a la funcion
-}
+/*========================
+    Objetos globales
+==========================
+
+El entorno de ejecucion es el lugar donde se ejecuta JavaScript. Históricamente, el entorno de ejecución de JavaScript es el navegador. Hoy podemos hacer aplicaciones del lado del servidor,aplicaciones de escritorio con JavaScript.
+
+Trailer de documental de Node.js: https://www.youtube.com/watch?v=SfWPqr04srM
+
+Los objetos globales en JavaScript son aquellos que estan disponibles en todo el entorno de ejecucion (el navegador en nuestro caso, o Node.js en el back).
+
+Los objetos globales varian dependiendo del entorno de ejecucion, sea un navegador o Node.js, pero su proposito es facilitar el acceso a ciertas funciones y valores predeterminados
+
+
+Objetos globales en el navegador:
+
+
+- Window
+Es el objeto global principal en el navegador. Este objeto representa la ventana del navegador y actua como el contenedor global para todas las variables, funciones y objetos globales en una pagina web. Todos los objetos, variables y funciones definidos en el ambito global estan automaticamente disponibles como propiedades del objeto window.
+
+- Objetos y metodos importantes del objeto window
+
+    - document: Representa el DOM de la pagina web actual, permitiendo acceder y manipular elementos html
+    let miParrafo = document.getElementById("parrafo");
+
+    - alert, prompt y confirm: Metodos que permiten mostrar dialogos al usuario
+
+    - setTimeout y setInterval: Metodos para programar la ejecucion de codigo despues de un tiempo o en intervalos regulares    
+*/
+   
+
+// location: Proporciona info sobre la URL actual de la pagina y permite redireccionar a otras URL
+console.log(window.location.href);
+
+
+// navigator: Contiene informacion sobre el navegador, la version, el agente de usuario y la geolocalizacion
+console.log(navigator.userAgent);
+
+
+// console: Proporciona acceso a la consola del navegador para mostrar mensajes de depuracion
+console.log("holis");
+console.log(console); // Vemos todo el objeto impreso
+
+
+// localStorage y sessionStorage: Permiten almacenar datos en el navegador de manera persistente o temporal
+
+
+// history: Proporciona acceso al historial de navegacion del navegador
+// history.back()
+
+
+
+/*============================================
+    Almacenamiento de datos en JavaScript
+==============================================
+
+En JavaScript, almacenar datos implica elegir la estructura adecuada de acuerdo con el timpo de informacion que queremos guardar y como queremos manipularla.
+
+- Variables simples: para valores unicos como numeros y cadenas
+
+
+
+- Objetos: Para representar datos complejos con propiedades
+
+    - Cuando deseamos represnetar una entidad unica con multiples atributos
+    - Cuando sabemos que no habra multiples instancias o copias de estos datos en la aplicacion
+    - Cuando necesitamos acceder a propiedades especificas mediante sus nombres
+
+
+- Arrays: Para almacenar listas ordenadas de elementos del mismo (idealmente)
+
+    - Cuando tenemos una lista ordenada de elementos individuales, donde cada elemento no requiere atributos adicionales, ej array de valores primitivo
+
+
+- Arrays de objetos: Para manejar listas ORDENADAS de elementos con propiedades similares
+
+    - Cuando necesitamos almacenar multiples isntancias de una misma entidad o estructura de datos
+    - Cuando planeamos realizar operaciones sobre una lista de elementos, como iteraciones, filtrados, etc
+    - Si necesitamos aplicar metodos de los arrays como map, filter, reduce, find
+
+    - Ejs: Listado de usuarios registrados en una plataforma, inventario de productos en una tienda, etc
+
 */
 
-function sumarDosYDos() {
-    let resultado = 2 + 2;
-    console.log(`El resultado es ${resultado}`);
-}
 
-sumarDosYDos();
+// Array de objetos
 
+let personas = [
+    {nombre: "Juan", edad: 30, ocupacion: "chofer"},
+    {nombre: "Carla", edad: 35, ocupacion: "arquitecta"},
+    {nombre: "Lautaro", edad: 35, ocupacion: "diseñador"}
+];
 
+// Ejemplo de iteracion
 
-// Funciones con parametros: Son las variables quie definimos en las funciones y que aceptan valores cuando se las llama
-
-function suma(a, b) { // Los nombres de las variables que definimos en la declaracion de la funcion
-
-    return `El resultado es ${a + b}`; // Las funciones pueden devolver un valor usando la palabra clave return
-    
-    console.log("Esto no se va a ejecutar"); // Return termina la ejecucion de la funcion
-}
-
-console.log(suma(2, 5)); // Argumentos: son los valores que le pasamos a la funcion cuando la llamamos
-
-
-function saludar(nombre = "maestro") { // Podemos poner valores predeterminados si no pasamos argumentos
-    console.log(`Hola ${nombre}`);
-}
-
-saludar("Marcos");
-
-
-// Multiples parametros: Los argumentos deben pasarse en el mismo orden
-function sumaTresNums(a, b, c) {
-    return a + b + c;
-}
-
-let miSuma = sumaTresNums(1, 2, 3);
-console.log(miSuma);
-
-
-
-
-
-/*===================================
-    Funciones en JavaScript
-=====================================
-- Una funcion es un bloque de codigo reutilizable que podremos ejecutar cuando lo llamamos por su nombre.
-
-- Usaremos funciones porque permiten organizar el codigo, permiten su reutilizacion y mejoran la legibilidad y el mantenimiento
-
-
-1. Funcion declarada: La forma mas comun de declarar una funcion en JavaScript, usando la palabra clave function
-
-function nombreFuncion() {
-    // Codigo a ejecutar cuando se llame o invoque esta funcion
-}
-
-
-===============================
-    Funciones flecha
-===============================
-
-Son una forma mas compacta de escribir funciones. Se introdujeron en ES6 y tienen una sintaxis mas concisa
-
-const nombreFuncion = (parametros) => {  }
-*/
-
-// Funcion sin parametros
-function sumaDosYCinco() {
-    let resultado = 2 + 5;
-    console.log(`El resultado es ${resultado}`);
-}
-
-sumaDosYCinco();
-
-// Funcion con parametros: Podemos definir variables en las funciones que acepten valores cuando se les llama
-function sumar(a , b) { // Los parametros son a, b
-    let resultado = a + b;
-    console.log(`El resultado es ${resultado}`);
-}
-
-sumar(5, 3); // Los argumentos son los valores que le pasamos a la funcion cuando los llamamos
-
-
-// Funciones que devuelven un valor: usando la palabra clave return
-function multiplicar(a, b) {
-    return a * b; // Todo lo de abajo no se va a ejecutar
-    console.log("Probando"); // A partir de la palabra clave return, no se continua la ejecucion del codigo
-}
-
-console.log(multiplicar(4,5));
-
-
-// Valores predeterminados en los parametros
-function saludar(nombre = "maestro") {
-    console.log(`Hola ${nombre}`);
-}
-
-saludar();
-
-function sumaTresNumeros(a, b, c) {
-    return a + b + c;
-}
-
-console.log(sumaTresNumeros(1, 2, 3));
-
-
-// Funciones flecha
-const saludarFlecha = () => {
-    console.log("Hola mundo");
-}
-
-saludarFlecha();
-
-// Funcion flecha con un solo parametro, los parentesis son opcionales
-const saludarFlechaNombre = nombre => {
-    console.log(`Que onda ${nombre}`);
-}
-
-saludarFlechaNombre("Emmanuel");
-
-
-// Funcion flecha en una sola linea
-// Si la funcion solo devuelve un valor, no es necesario usar la palabra return ni las { }
-const sumarFlecha = (a, b) => a + b;
-
-console.log(sumarFlecha(6, 9));
-
-
-/*=====================================
-    Tipos de funciones en JavaScript
-=======================================
-
-1. Funcion declarada / Named function o Basic function
-
-- Es la declaracion basica de JavaScript, usa la keyword function
-- Se recomienda para funciones con nombre o cuando se necesite hoisting.
-- Las funciones declaradas con la keyword function se pueden elevar a la parte superior de su ambito. Por lo que podemos llamar a la funcion antes de ser declarada
-
-    ciclon();
-
-    function ciclon() {
-        console.log(`Aguante San Lorenzo`);
-    }
-
-
-2. Funcion expresada / Function expression
-- Es la funcion que esta dentro de una varaible
-- Son utiles para funciones anonimas, para cuando se quiere controlar donde va a estar disponible la funcion o para cuando va a ser usada como argumento para otra funcion
-
-    const casla = function() {
-        console.log(`Aguante el ciclon`);
-    }
-
-    casla();
-
-
-3. Funcion anonima / Anonymous function
-- No tiene nombre y se usan como callbacks generalmente
-    
-    setTimeout(function() {
-        console.log(`Soy una funcion anonima dentro de una operacion asincronica`)
-    }, 1000);
-
-
-4. Funcion flecha / Arrow function
-- Muy utiles para escribir funciones de una sola linea
-
-const sumarFlecha = (a, b) => a + b;
-
-
-5. Funcion de metodos / Method function
-- Funciones definidas dentro de un objeto o clase
-
-    const persona = {
-    nombre: "Alejo",
-    saludar() {
-        console.log(`Hola, me llamo ${this.nombre}`);
-    }
-}
-
-persona.saludar();
-
-
-// 6. Expresion de funcion ejecutada inmediatamente / IIFE - Immediately Invoked Function Expressions
-- Funciones que se ejecutan inmediatamente despues de haberse definido
-
-(function() {
-    console.log(`Esta es una IIFE`);
-}());
-
-
-
-
-==========================================
-    Tipos de funciones flecha
-==========================================
-// Funcion flecha sin parametros
-const despedirse = () => console.log("Chau nos vemos");
-despedirse();
-
-// Funcion de flecha con un solo parametro
-const cuadrado = x => x * x;
-console.log(cuadrado(5));
-
-// Funcion de flecha con mas de un parametro
-const restar = (a, b) => a - b;
-console.log(restar(5, 3));
-
-
-// Funcion de flecha con mas de una instruccion en la funcion
-const saludarProfe = nombre => {
-    const saludo = `Hola, ${nombre}`
-    return saludo;
-}
-
-console.log(saludarProfe("Gabi"))
-*/
-
-// 1. Funcion declarada
-ciclon();
-
-function ciclon() {
-    console.log(`Aguante San Lorenzo`);
-}
-
-
-// 2. Funcion expresada
-const casla = function() {
-    console.log(`Aguante el ciclon`);
-}
-
-casla();
-
-
-// 3. Funcion anonima
-setTimeout(function() {
-    console.log(`Soy una funcion anonima dentro de una operacion asincronica`)
-}, 1000);
-
-
-// 4. Funcion flecha
-const sumarMuestra = (a, b) => a + b;
-
-
-// 5. Funcion de metodos / Method function
-const persona = {
-    nombre: "Alejo",
-    saludar() {
-        console.log(`Hola, me llamo ${this.nombre}`);
-    }
-}
-
-persona.saludar();
-
-
-// 6. Expresion de funcion ejecutada inmediatamente / IIFE - Immediately Invoked Function Expressions
-(function() {
-    console.log(`Esta es una IIFE`);
-}());
-
-
-
-
-// Funcion flecha sin parametros
-const despedirse = () => console.log("Chau nos vemos");
-despedirse();
-
-// Funcion de flecha con un solo parametro
-const cuadrado = x => x * x;
-console.log(cuadrado(5));
-
-// Funcion de flecha con mas de un parametro
-const restar = (a, b) => a - b;
-console.log(restar(5, 3));
-
-
-// Funcion de flecha con mas de una instruccion en la funcion
-const saludarProfe = nombre => {
-    const saludo = `Hola, ${nombre}`
-    return saludo;
-}
-
-console.log(saludarProfe("Gabi"));
-
-
-
-/*==========================
-    Scope (Ambito)
-============================
-El scope se refiere al contexto en el cual las variables y funciones son accesibles y pueden ser referenciadas
-
-// Global Scope o Ambito global
-    - Las variables declaradas FUERA de cualquier funcion o bloque tienen alcance global y son accesibles desde cualquier parte del codigo
-
-// Local Scope o Function Scope
-    - Las variables declaradas dentro de una funcion solo son accesibles dentro de esa funcion y tienen un ambito local
-
-// Block Scope o Ambito de bloque
-    - A partir de ES6 (JavaScript 2015), las variables let y const tienen alcance de bloque, por lo que solo son accesibles dentro de las {} (bucle, condicional, etc)
-*/
-
-// Global Scope
-var globalLet = "Soy una variable global";
-
-function mostrarGlobal() {
-    console.log(globalLet);
-}
-
-mostrarGlobal();
-console.log(globalLet);
-
-
-// Local Scope
-function mostrarLocal() {
-    var localVar = "Soy local";
-    console.log(localVar);
-}
-
-mostrarLocal();
-// console.log(localVar); // Uncaught ReferenceError: localVar is not defined
-
-
-// Block Scope
-if(true) {
-    let bloqueLet = "Soy de bloque";
-    console.log(bloqueLet);
-}
-
-// console.log(bloqueLet); // Uncaught ReferenceError: bloqueLet is not defined
-
-
-// NOTA: Siempre declaremos variables modernas con let y const
-
-
-
-
-/* ==========================
-    Hoisting (Elevacion)
-=============================
-
-- Las declaraciones de variables y funciones en JS se mueven "hacia arriba" de su contexto de ejecucion (scope).
-Solo las declaraciones son elevadas, no asi las inicializaciones
-
-- var: Las variables se elevan y se inicializan con undefined
-
-- let y const: Las variables se elevan pero NO se inicializan
-*/
-
-console.log(elevadaVar); // undefined
-var elevadaVar = "Soy var elevada";
-console.log(elevadaVar);
-
-
-console.log(elevadaLet); // Uncaught ReferenceError: Cannot access 'elevadaLet' before initialization
-let elevadaLet = "Soy una let elevada";
-console.log(elevadaLet);
-
-
-/* =================================
-    Comparacion var, let y const
-==================================
-
-En resumen, let y const proporcionan un control más preciso sobre el ámbito y el comportamiento de las variables en
-comparación con var . 
-
-Aunque var sigue estando soportado, let y const se recomiendan para código nuevo debido a su ámbito e inmutabilidad mejorados.
-
-Las principales diferencias entre var , let y const en JavaScript son su ámbito, redeclarabilidad y reasignabilidad:
-
-var :
-    • De ámbito de función.
-    • Puede ser redeclarado y reasignado.
-    • Tiene elevación a nivel de función, lo que significa que puede utilizarse antes de la declaración.
-
-let :
-    • De ámbito bloque (dentro de un bucle, una sentencia condicional o una función).
-    • No se puede volver a declarar, pero SI reasignar.
-    • Tiene elevación a nivel de bloque, lo que significa que no es accesible antes de la declaración.
-
-const :
-    • A nivel de bloque (dentro de un bucle, sentencia condicional o función).
-    • No se puede volver a declarar ni reasignar.
-    • Tiene elevación a nivel de bloque, lo que significa que no es accesible antes de la declaración.
-
-Buenas prácticas:
-
-Usa const para variables de sólo lectura, como constantes u objetos inmutables. Utiliza let para variables que puedan
-cambiar con el tiempo, pero que no deban volver a declararse. Evita usar var debido a su ámbito global o de función, que
-puede dar lugar a conflictos y bugs.
-
-// Discusion en stackoverflow con argumentos a favor de const y a favor de let
-https://stackoverflow.com/questions/41086633/in-javascript-why-should-i-usually-prefer-const-to-let
-*/
+personas.forEach(persona => console.log(persona));
