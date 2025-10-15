@@ -1,5 +1,15 @@
 # IFTS16_25Cuatri2_Frontend
 
+## Avisos cursada -> **Fechas presenciales de la materia**
+- **12 noviembre**. Presentacion Portfolio, TPO
+    - *Mostrar alguna pagina o idea de referencia (idealmente)* con la que armaron un portfolio HTML, CSS y con JS opcional
+    - Idealmente diseñar algo propio y original o copiar algo que nos gustó
+    
+
+- **19 noviembre**. Presentacion TP Grupal
+    - En grupos de 4-5 personas, presentar una pagina que consuma informacion de una API Rest
+    - Busquen informacion de una API Rest, clima, cotizaciones, eventos culturales, ble
+    - Tambien, opcional, pueden scrapear una web, usando, por ejemplo Axios
 
 ---
 
@@ -8,6 +18,170 @@
 - Arrancamos guion JavaScript V desde los primeros ejemplos con bucle for clasico
 
 ---
+
+## JavaScript VI / Manipulacion del DOM en JavaScript y Eventos
+
+### [Que es el DOM en Javascript?](https://www.w3schools.com/whatis/whatis_htmldom.asp)
+- DOM (Document Object Model) o Modelo de Objeto de Documento es una representacion en memoria de la estructura de una pagina web
+
+- Cada etiqueta html es un nodo en el DOM
+
+- El DOM permite que JavaScript modifique el contenido, la estructura y el estilo de una pagina
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Document</title>
+    </head>
+    
+    <body>
+        <h1>Bienvenidos</h1>
+        <p>Esto es un parrafo</p>
+    </body>
+</html>
+
+<!-- En el DOM, esta pagina se representaria con el siguiente diagrama
+
+- document
+    - html
+        - head
+            - title
+        - body
+            - h1
+            - p
+ -->
+```
+
+#### `document` es un objeto global
+- El objeto global `document` es la representacion en JavaScript del documento HTML cargado en el navegador, acutando como punto de entrada al contenido de la pagina web y al arbol del Modelo de Objetos del Documento DOM.
+
+- Este objeto proporciona funcionalidad global para el documento, permitiendo acceder y manipular elementos, propiedades y metodos relacionados con la pagina, como obtener la URL del documento, o crear nuevos elementos.
+
+- JavaScript puede acceder y modificar cualquier elemento del DOM utilizando el objeto global `document`, esto es gracias a las Web APIs (que veremos en JavaScript VII). JavaScript puede
+    - Modificar el contenido (textos, atributos, clases)
+    - Añadir o eliminar elementos del DOM
+    - Escuchar eventos del usuario (clicks, teclas, etc)
+
+
+```js
+console.log(document);
+console.log(console);
+
+/*===================
+    getElementById
+=====================
+- Este metodo selecciona un unico elemento por su ID.
+- Solo selecciona el primer elemento que coincida con el ID
+*/
+
+let titulo = document.getElementById("titulo");
+console.log(titulo); // <h1 id="titulo">Introduccion a JavaScript</h1>
+console.log(titulo.textContent); //Introduccion a JavaScript
+
+
+/*===================
+    querySelector
+=====================
+
+- querySelector: Selecciona el primer elemento que coincida con un selector CSS (.clase, #id o etiqueta)
+- querySelectorAll: Selecciona TODOS los elementos que coincida con un selector CSS (.clase, #id o etiqueta). Devuelve algo parecido a un array, una NodeList (array de nodos), interno del DOM
+*/
+
+let primerParrafo = document.querySelector(".mensaje");
+console.log(primerParrafo.textContent); // Primer parrafo
+
+let parrafos = document.querySelectorAll(".mensaje");
+console.log(parrafos); // NodeList(2) [p.mensaje, p.mensaje]
+
+parrafos.forEach(parrafo => console.log(parrafo.textContent));
+
+
+/*=====================================
+    Modificar contenido y atributos
+=======================================
+
+- textContent: Modificar el texto dentro de un elemento
+
+- innerHTML: Modificar el contenido HTML dentro de un elmento
+
+- setAttribute(): Modifica los atributos de un elemento
+
+- style: Permite cambiar el estilo CSS en linea de un elemento
+*/
+
+let miParrafo = document.getElementById("miParrafo");
+
+// Cambiamos el texto
+miParrafo.textContent = "Soy el nuevo texto creado desde JS";
+
+// Modificar el contenido HTML introduciendo etiquetas
+miParrafo.innerHTML = "<strong>Texto en negrita</strong>";
+
+
+
+let miBoton = document.getElementById("miBoton");
+// Cambiar el atributo id
+miBoton.setAttribute("id", "nuevoId");
+
+miBoton.style.backgroundColor = "green";
+miBoton.style.color = "white";
+miBoton.style.padding = "5px";
+
+
+
+/*=====================================
+    Eventos en JavaScript
+=======================================
+Los eventos en JavaScript permiten a los desarrolladores detectar interacciones del usuario con la pagina web, como hacer click en un boton, mover el mouse, escribir en un campo de texto, etc
+
+Los eventos son clave para que la pagina web sea interactiva
+
+Tecnicamente un evento es una señal que se envia cuando ocurre una interaccion o cambio en el documento. JavaScript permite escuchar estos eventos y ejecutar funciones especificas cuando ocurren
+
+    - Eventos de mouse: click, dbclick, mouseover, mouseout, mousemove
+    
+    - Eventos de teclado: keydown, keyup, keypress (deprecado)
+
+    - Eventos de formulario: sumbit, change, input, focus
+
+    - Eventos de ventana: resize, scroll, load, unload
+
+
+Para manejar eventos, tenemos que "escuchar" estas interacciones.
+Para esto, tenemos el metodo addEventListener() que le adjunta una funcion a un evento especifico en un elemento. Este es un proceso que queda permanentemente escuchando (ejecutandose)
+
+
+
+
+*/
+
+miBoton.addEventListener("click", function() {
+    console.log("Hiciste click!");
+});
+
+// Aca mostramos por consola el valor de un campo de texto cuando termino de escribir un caracter
+let input = document.getElementById("input");
+input.addEventListener("keyup", function() {
+    console.log(input.value); 
+});
+
+// Escuchar el evento de pulsacion de tecla 
+let nuevoInput = document.getElementById("nuevoInput");
+nuevoInput.addEventListener("keydown", function(event) { // -> event lo incluiremos en la funcion cuando necesitemos informacion o metodos del evento
+
+    // event es un objeto que contiene todos los datos del evento que ocurrio: que tecla, que boton, etc
+
+    console.log(`Tecla presionada: ${event.key}`);
+    console.log(`Codigo de tecla: ${event.code}`);
+});
+
+// TODO: proxima clase terminamos de ver la propagacion de eventos
+// TODO: Hacer muestra para consumir datos de una API Rest y crear un HTML dinamico en JavaScript y renderizarlo en el documento
+```
+
+---
+
 
 ## JavaScript V / Objetos globales. Almacenamiento persistente, iteracion en arrays, iteracion en objetos e iteracion en arrays de objetos
 
@@ -360,7 +534,52 @@ let usuarioMasTreintaYCinco = personas.findIndex(persona => persona.edad >= 35);
 console.log(usuarioMasTreintaYCinco);
 
 // for...of, some y every
-// Prox clase terminamos estos dos metodos y arrancamos con JavaScript VI (Manipulacion del DOM y Eventos)
+
+/*==================
+    for...of
+====================
+
+    for (const elemento of array) {
+        console.log(elemento)
+        if(elemento === "stop") {
+            break;
+        }
+    }
+
+    - Ventajas: Sintaxis limpia, permite break y continue
+    - Desventajas: No provee indice automatico
+*/
+
+
+const empleados = [
+    { nombre: "Ana", salario: 3000, rol: "user" },
+    { nombre: "Nico", salario: 3500, rol: "admin"   },
+    { nombre: "Yamila", salario: 4000, rol: "user"  }
+];
+
+for (let emp of empleados) {
+    if(emp.salario > 3500) {
+        console.log(`${emp.nombre} cobra mas de 3500`);
+        break; // for...of nos permite salir el bucle al encontrar el primer empleado con esa condicion
+    } 
+}
+
+/*==========================
+    some() y every()
+============================
+
+    const algunoCumple = array.some(elemento => elemento > 0);
+    const todosCumple = array.every(elemento => elemento > 0);
+
+- Proposito: Verifican si alguno/todos cumplen una condicion
+- Retorna: Booleano
+*/
+
+let existeAdmin = empleados.some(empleado => empleado.rol === "admin");
+console.log(existeAdmin); // true
+
+let todosArribaTresLucas = empleados.every(empleado => empleado.salario > 3000);
+console.log(todosArribaTresLucas); // false
 ```
 
 ---
@@ -1345,8 +1564,3 @@ console.log(typeof "hola");
 ---
 
 ## JavaScript VII / High order functions, destructuring, spread operator, closures, funciones anidadas, callbacks, web apis
-
----
-
-## JavaScript VI / Manipulacion del DOM en JavaScript y Eventos
-
