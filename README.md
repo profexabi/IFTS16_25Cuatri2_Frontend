@@ -13,9 +13,211 @@
 
 ---
 
-## Notas cursada
-- Arrancar con ejemplos de iteracion con bucles for, forEach, etc
-- Arrancamos guion JavaScript V desde los primeros ejemplos con bucle for clasico
+### Tareas EXTRA -> Conocer conceptual y teoricamente como funciona internet
+
+1. [Playlist de web de Todocode](https://www.youtube.com/watch?v=lC6JOQLIgp0&list=PLQxX2eiEaqbxx6Ds5bd1F6LZJo7_OnZhV)
+    - Arquitectura cliente servidor
+    - Protocolo HTTP
+    - Opcional, librerias y frameworks
+    - Que es JSON
+    - Que son las APIs
+
+2. [Protocolo HTTP y lenguaje HTML](https://www.youtube.com/watch?v=l6oF_RpBf64)
+
+---
+
+### EXTRA, consumiendo una API Rest
+
+#### Que es `fetch()`?
+Es una funcion incorporada en los navegadores modernos que permite realizar peticiones HTTP, de forma asincrona y utilizando promesas
+
+- Devuelve un objeto Promise que se resuelve con un objeto Response
+- Utiliza el estandar HTTP con metodos como GET, POST, PUT, DELETE
+- Funciona muy bien con async/await
+- Es mas limpia que el viejo metodo XMLHTTPRequest
+- Soporta CORS, cabeceras, envio de JSON y mas
+
+```js
+fetch(url, options) // Envia una solicitud HTTP
+    .then(response => response.json) // Maneja la respuesta "cruda" del servidor y la convierte a objetos JS
+    .then(data => console.log(data))
+    .catch(error => console.error(error));
+
+
+/*==============================================
+    Consumiendo informacion de una API Rest
+==============================================*/
+
+
+// OPCION 1: Utilizando Promesas y encadenando con .then
+
+// Hacemos una solicitud a esta URL para traer todo el choclo de datos en JSON
+fetch("https://jsonplaceholder.typicode.com/users")
+
+    // Convertimos el texto plano JSON en objetos JavaScript
+    .then(response => response.json()) 
+
+    // Una vez que tenemos procesados nuestros datos, los mostramos por consola
+    .then(data =>  {
+        console.table(data);
+        
+    });
+
+// OPCION 2: Usar la sintaxis mas moderna para trabajar con promesas
+
+```
+---
+
+
+## JavaScript VII / High order functions, destructuring, spread operator, closures, funciones anidadas, callbacks, web apis
+```js
+console.log(document);
+console.log(console);
+
+/*===================
+    getElementById
+=====================
+- Este metodo selecciona un unico elemento por su ID.
+- Solo selecciona el primer elemento que coincida con el ID
+*/
+
+let titulo = document.getElementById("titulo");
+console.log(titulo); // <h1 id="titulo">Introduccion a JavaScript</h1>
+console.log(titulo.textContent); //Introduccion a JavaScript
+
+
+/*===================
+    querySelector
+=====================
+
+- querySelector: Selecciona el primer elemento que coincida con un selector CSS (.clase, #id o etiqueta)
+- querySelectorAll: Selecciona TODOS los elementos que coincida con un selector CSS (.clase, #id o etiqueta). Devuelve algo parecido a un array, una NodeList (array de nodos), interno del DOM
+*/
+
+let primerParrafo = document.querySelector(".mensaje");
+console.log(primerParrafo.textContent); // Primer parrafo
+
+let parrafos = document.querySelectorAll(".mensaje");
+console.log(parrafos); // NodeList(2) [p.mensaje, p.mensaje]
+
+parrafos.forEach(parrafo => console.log(parrafo.textContent));
+
+
+/*=====================================
+    Modificar contenido y atributos
+=======================================
+
+- textContent: Modificar el texto dentro de un elemento
+
+- innerHTML: Modificar el contenido HTML dentro de un elmento
+
+- setAttribute(): Modifica los atributos de un elemento
+
+- style: Permite cambiar el estilo CSS en linea de un elemento
+*/
+
+let miParrafo = document.getElementById("miParrafo");
+
+// Cambiamos el texto
+miParrafo.textContent = "Soy el nuevo texto creado desde JS";
+
+// Modificar el contenido HTML introduciendo etiquetas
+miParrafo.innerHTML = "<strong>Texto en negrita</strong>";
+
+
+
+let miBoton = document.getElementById("miBoton");
+// Cambiar el atributo id
+miBoton.setAttribute("id", "nuevoId");
+
+miBoton.style.backgroundColor = "green";
+miBoton.style.color = "white";
+miBoton.style.padding = "5px";
+
+
+
+/*=====================================
+    Eventos en JavaScript
+=======================================
+Los eventos en JavaScript permiten a los desarrolladores detectar interacciones del usuario con la pagina web, como hacer click en un boton, mover el mouse, escribir en un campo de texto, etc
+
+Los eventos son clave para que la pagina web sea interactiva
+
+Tecnicamente un evento es una señal que se envia cuando ocurre una interaccion o cambio en el documento. JavaScript permite escuchar estos eventos y ejecutar funciones especificas cuando ocurren
+
+    - Eventos de mouse: click, dbclick, mouseover, mouseout, mousemove
+    
+    - Eventos de teclado: keydown, keyup, keypress (deprecado)
+
+    - Eventos de formulario: submit, change, input, focus
+
+    - Eventos de ventana: resize, scroll, load, unload
+
+
+Para manejar eventos, tenemos que "escuchar" estas interacciones.
+Para esto, tenemos el metodo addEventListener() que le adjunta una funcion a un evento especifico en un elemento. Este es un proceso que queda permanentemente escuchando (ejecutandose)
+
+
+
+
+*/
+
+miBoton.addEventListener("click", function() {
+    console.log("Hiciste click!");
+});
+
+// Aca mostramos por consola el valor de un campo de texto cuando termino de escribir un caracter
+let input = document.getElementById("input");
+input.addEventListener("keyup", function() {
+    console.log(input.value); 
+});
+
+// Escuchar el evento de pulsacion de tecla 
+let nuevoInput = document.getElementById("nuevoInput");
+nuevoInput.addEventListener("keydown", function(event) { // -> event lo incluiremos en la funcion cuando necesitemos informacion o metodos del evento
+
+    // event es un objeto que contiene todos los datos del evento que ocurrio: que tecla, que boton, etc
+
+    console.log(`Tecla presionada: ${event.key}`);
+    console.log(`Codigo de tecla: ${event.code}`);
+});
+
+
+
+/*=============================
+    Propagacion de eventos
+===============================
+
+Cuando ocurre un evento, este se propaga a traves del DOM en dos fases:
+
+    - Fase de captura (de arriba hacia abajo)
+    - Fase de burbuja (de abajo hacia arriba)
+
+Podemos detener la propagacion de un evento usando el metodo event.stopPropagation()
+*/
+
+let padre = document.querySelector("#padre");
+let hijo = document.getElementById("hijo");
+
+
+// Vamos a escuchar el click en el div padre
+padre.addEventListener("click", function() {
+    console.log("Se hizo click en el div padre");
+});
+
+// Vamos a escuchar el click en el boton hijo
+hijo.addEventListener("click", function(event) {
+    event.stopPropagation(); // Detengo la propagacion
+    console.log("Se hizo click en el boton hijo");
+});
+
+
+let miForm = document.getElementById("miForm");
+miForm.addEventListener("submit", function(event) {
+    event.preventDefault();
+    alert("Formulario no enviado!");
+});
+```
 
 ---
 
@@ -1561,6 +1763,3 @@ console.log(typeof "hola");
 
 ## JavaScript VIII / JSON, asincronia, promesas, fetch, async/await y try/catch
 
----
-
-## JavaScript VII / High order functions, destructuring, spread operator, closures, funciones anidadas, callbacks, web apis
