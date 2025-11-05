@@ -13,6 +13,11 @@
 
 ---
 
+## Notas cursada
+- Chusmear `Call Stack` y `Event Loop`!
+
+---
+
 ### Tareas EXTRA -> Conocer conceptual y teoricamente como funciona internet
 
 1. [Playlist de web de Todocode](https://www.youtube.com/watch?v=lC6JOQLIgp0&list=PLQxX2eiEaqbxx6Ds5bd1F6LZJo7_OnZhV)
@@ -68,8 +73,144 @@ fetch("https://jsonplaceholder.typicode.com/users")
 ```
 ---
 
+## JavaScript VIII EXTRA / Consumiendo una API Rest y renderizando los resultados por pantalla
+```js
+// Variables globales
+let contenedorApi = document.getElementById("contenedorApi");
+let contenedorAlbums = document.getElementById("contenedorAlbums")
+
+/*==============================================
+    Consumiendo informacion de una API Rest
+==============================================*/
+
+// OPCION 1: Trabajando con promesas y encadenando con .then()
+
+// Hacemos una solicitud a esta URL para traer todo el choclo de datos en JSON
+fetch("https://jsonplaceholder.typicode.com/users")
+
+    // Convertimos el texto plano JSON en objetos JavaScript
+    .then(response => response.json()) 
+
+    // Una vez que tenemos procesados nuestros datos, los mostramos por consola
+    .then(data => {
+        console.table(data)
+        
+        let cartaPersona = ``;
+
+        data.forEach(p => {
+            cartaPersona += `
+                <ul class="lista-data">
+                    <li>Nombre: ${p.name}</li>
+                    <li>Apodo: ${p.username}</li>
+                    <li>Correo: ${p.email}</li>
+                    <li>Celu: ${p.phone}</li>
+                </ul>
+            `;
+        });
+
+        console.log(cartaPersona); // Una vez que creamos dinamicamente este HTML nuevo con los datos de la API, vamos a renderizarlo en la pagina
+
+        contenedorApi.innerHTML = cartaPersona
+    })
+
+    .catch(error => console.log(error));
+
+
+// OPCION 2: Utilizando una solucion mas moderna, async/await
+async function obtenerAlbumes() {
+
+    // El codigo que puede fallar, como el de una peticion HTTP, lo metemos en el bloque try
+    try {
+        // Hacemos una solicitud a esta URL para traer todo el choclo de datos en JSON
+        const res = await fetch("https://jsonplaceholder.typicode.com/albums"); // Aca el codigo se detiene hasta que esto se resuelva
+
+        // Convertimos el texto plano JSON en objetos JavaScript
+        const data = await res.json();
+
+        // Una vez que tenemos procesados nuestros datos, los mostramos por consola
+        console.log(data);
+
+        mostrarAlbums(data);
+
+    } catch(error) {
+        console.error("Se produjo un error", error);
+    }
+}
+
+obtenerAlbumes();
+
+
+function mostrarAlbums(data) {
+    let htmlAlbums = "";
+
+    data.forEach(album => {
+        htmlAlbums += `
+            <ul class="lista-data album">
+                <li>Id: ${album.id}</li>
+                <li>Titulo: ${album.title}</li>
+            </ul>
+        `;
+    });
+
+    contenedorAlbums.innerHTML = htmlAlbums;   
+}
+```
+
+---
+
 
 ## JavaScript VII / High order functions, destructuring, spread operator, closures, funciones anidadas, callbacks, web apis
+```js
+
+```
+
+---
+
+## JavaScript VI / Manipulacion del DOM en JavaScript y Eventos
+
+### [Que es el DOM en Javascript?](https://www.w3schools.com/whatis/whatis_htmldom.asp)
+- DOM (Document Object Model) o Modelo de Objeto de Documento es una representacion en memoria de la estructura de una pagina web
+
+- Cada etiqueta html es un nodo en el DOM
+
+- El DOM permite que JavaScript modifique el contenido, la estructura y el estilo de una pagina
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Document</title>
+    </head>
+    
+    <body>
+        <h1>Bienvenidos</h1>
+        <p>Esto es un parrafo</p>
+    </body>
+</html>
+
+<!-- En el DOM, esta pagina se representaria con el siguiente diagrama
+
+- document
+    - html
+        - head
+            - title
+        - body
+            - h1
+            - p
+ -->
+```
+
+#### `document` es un objeto global
+- El objeto global `document` es la representacion en JavaScript del documento HTML cargado en el navegador, acutando como punto de entrada al contenido de la pagina web y al arbol del Modelo de Objetos del Documento DOM.
+
+- Este objeto proporciona funcionalidad global para el documento, permitiendo acceder y manipular elementos, propiedades y metodos relacionados con la pagina, como obtener la URL del documento, o crear nuevos elementos.
+
+- JavaScript puede acceder y modificar cualquier elemento del DOM utilizando el objeto global `document`, esto es gracias a las Web APIs (que veremos en JavaScript VII). JavaScript puede
+    - Modificar el contenido (textos, atributos, clases)
+    - Añadir o eliminar elementos del DOM
+    - Escuchar eventos del usuario (clicks, teclas, etc)
+
+
 ```js
 console.log(document);
 console.log(console);
@@ -217,169 +358,6 @@ miForm.addEventListener("submit", function(event) {
     event.preventDefault();
     alert("Formulario no enviado!");
 });
-```
-
----
-
-## JavaScript VI / Manipulacion del DOM en JavaScript y Eventos
-
-### [Que es el DOM en Javascript?](https://www.w3schools.com/whatis/whatis_htmldom.asp)
-- DOM (Document Object Model) o Modelo de Objeto de Documento es una representacion en memoria de la estructura de una pagina web
-
-- Cada etiqueta html es un nodo en el DOM
-
-- El DOM permite que JavaScript modifique el contenido, la estructura y el estilo de una pagina
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>Document</title>
-    </head>
-    
-    <body>
-        <h1>Bienvenidos</h1>
-        <p>Esto es un parrafo</p>
-    </body>
-</html>
-
-<!-- En el DOM, esta pagina se representaria con el siguiente diagrama
-
-- document
-    - html
-        - head
-            - title
-        - body
-            - h1
-            - p
- -->
-```
-
-#### `document` es un objeto global
-- El objeto global `document` es la representacion en JavaScript del documento HTML cargado en el navegador, acutando como punto de entrada al contenido de la pagina web y al arbol del Modelo de Objetos del Documento DOM.
-
-- Este objeto proporciona funcionalidad global para el documento, permitiendo acceder y manipular elementos, propiedades y metodos relacionados con la pagina, como obtener la URL del documento, o crear nuevos elementos.
-
-- JavaScript puede acceder y modificar cualquier elemento del DOM utilizando el objeto global `document`, esto es gracias a las Web APIs (que veremos en JavaScript VII). JavaScript puede
-    - Modificar el contenido (textos, atributos, clases)
-    - Añadir o eliminar elementos del DOM
-    - Escuchar eventos del usuario (clicks, teclas, etc)
-
-
-```js
-console.log(document);
-console.log(console);
-
-/*===================
-    getElementById
-=====================
-- Este metodo selecciona un unico elemento por su ID.
-- Solo selecciona el primer elemento que coincida con el ID
-*/
-
-let titulo = document.getElementById("titulo");
-console.log(titulo); // <h1 id="titulo">Introduccion a JavaScript</h1>
-console.log(titulo.textContent); //Introduccion a JavaScript
-
-
-/*===================
-    querySelector
-=====================
-
-- querySelector: Selecciona el primer elemento que coincida con un selector CSS (.clase, #id o etiqueta)
-- querySelectorAll: Selecciona TODOS los elementos que coincida con un selector CSS (.clase, #id o etiqueta). Devuelve algo parecido a un array, una NodeList (array de nodos), interno del DOM
-*/
-
-let primerParrafo = document.querySelector(".mensaje");
-console.log(primerParrafo.textContent); // Primer parrafo
-
-let parrafos = document.querySelectorAll(".mensaje");
-console.log(parrafos); // NodeList(2) [p.mensaje, p.mensaje]
-
-parrafos.forEach(parrafo => console.log(parrafo.textContent));
-
-
-/*=====================================
-    Modificar contenido y atributos
-=======================================
-
-- textContent: Modificar el texto dentro de un elemento
-
-- innerHTML: Modificar el contenido HTML dentro de un elmento
-
-- setAttribute(): Modifica los atributos de un elemento
-
-- style: Permite cambiar el estilo CSS en linea de un elemento
-*/
-
-let miParrafo = document.getElementById("miParrafo");
-
-// Cambiamos el texto
-miParrafo.textContent = "Soy el nuevo texto creado desde JS";
-
-// Modificar el contenido HTML introduciendo etiquetas
-miParrafo.innerHTML = "<strong>Texto en negrita</strong>";
-
-
-
-let miBoton = document.getElementById("miBoton");
-// Cambiar el atributo id
-miBoton.setAttribute("id", "nuevoId");
-
-miBoton.style.backgroundColor = "green";
-miBoton.style.color = "white";
-miBoton.style.padding = "5px";
-
-
-
-/*=====================================
-    Eventos en JavaScript
-=======================================
-Los eventos en JavaScript permiten a los desarrolladores detectar interacciones del usuario con la pagina web, como hacer click en un boton, mover el mouse, escribir en un campo de texto, etc
-
-Los eventos son clave para que la pagina web sea interactiva
-
-Tecnicamente un evento es una señal que se envia cuando ocurre una interaccion o cambio en el documento. JavaScript permite escuchar estos eventos y ejecutar funciones especificas cuando ocurren
-
-    - Eventos de mouse: click, dbclick, mouseover, mouseout, mousemove
-    
-    - Eventos de teclado: keydown, keyup, keypress (deprecado)
-
-    - Eventos de formulario: sumbit, change, input, focus
-
-    - Eventos de ventana: resize, scroll, load, unload
-
-
-Para manejar eventos, tenemos que "escuchar" estas interacciones.
-Para esto, tenemos el metodo addEventListener() que le adjunta una funcion a un evento especifico en un elemento. Este es un proceso que queda permanentemente escuchando (ejecutandose)
-
-
-
-
-*/
-
-miBoton.addEventListener("click", function() {
-    console.log("Hiciste click!");
-});
-
-// Aca mostramos por consola el valor de un campo de texto cuando termino de escribir un caracter
-let input = document.getElementById("input");
-input.addEventListener("keyup", function() {
-    console.log(input.value); 
-});
-
-// Escuchar el evento de pulsacion de tecla 
-let nuevoInput = document.getElementById("nuevoInput");
-nuevoInput.addEventListener("keydown", function(event) { // -> event lo incluiremos en la funcion cuando necesitemos informacion o metodos del evento
-
-    // event es un objeto que contiene todos los datos del evento que ocurrio: que tecla, que boton, etc
-
-    console.log(`Tecla presionada: ${event.key}`);
-    console.log(`Codigo de tecla: ${event.code}`);
-});
-
-// TODO: proxima clase terminamos de ver la propagacion de eventos
-// TODO: Hacer muestra para consumir datos de una API Rest y crear un HTML dinamico en JavaScript y renderizarlo en el documento
 ```
 
 ---
@@ -589,6 +567,14 @@ console.log(numerosDobles);
 
 let numerosCuadrados = numeros.map(num => num * num);
 console.log(numerosCuadrados)
+
+/* De fondo estamos haciendo esto
+
+let numerosCuadrados = [];
+numeros.map(function(num) {
+    numerosCuadrados.push(num * num)
+})
+*/
 
 // Ejemplo 2: Extraemos propiedades-> Guardamos los nombres en un nuevo array
 /*
