@@ -3,7 +3,8 @@
 ========================
 
 1. Los callbacks son funciones que se pasan como argumentos a otras funciones 
-2. y se ejecutan despues de que ocurra algun evento o se complete alguna operacion*/
+2. y se ejecutan despues de que ocurra algun evento o se complete alguna operacion 
+*/
 
 // Ejemplo 1
 function procesarDatos(datos, callback) {
@@ -169,7 +170,7 @@ console.log(pares);
 
 
 /////////////////////////
-Callback Hell
+    Callback Hell
 /////////////////////////
 
 Ocurre cuando tenemos muchas funciones anidadas dentro de otras, especialmente al hacer tareas asincronicas. JavaScript maneja operaciones asincronicas con callbacks: funciones que se ejecutan despues de que otra funcion termina
@@ -257,18 +258,6 @@ async function obtenerDatos() {
 obtenerDatos();
 
 
-
-
-/* TO DO: 
-
-- Destructuring
-- Spread operator
-- Funciones anidadas
-- Closures
-- High Order Function
-- Estudiar que son las HOF y su diferencia con los callbacks
-- Web APIs
-*/
 
 /*===========================
     High Order Functions
@@ -394,3 +383,184 @@ console.log(alCuadrado);
 // filter: Crea un nuevo array con los elementos que cumplen una condicion
 const numerosPares = numeros.filter(n => n % 2 === 0);
 console.log(numerosPares);
+
+
+
+/*=====================
+    Destructuring
+=======================
+
+El destructuring o desestructuracion es una sintaxis que permite extraer valores de arrays o propiedades de objetos y asignaros a variables de forma concisa
+
+Es una forma de descomponer estructuras de datos como arrays y objetos en variables individuales sin necesidad de acceder manualmente a cada elemento o propiedad
+
+Entre sus ventajas destacamos
+    - Mejora la legibilidad del codigo
+    - Facilita el acceso rapido a datos de estructuras complejas
+    - Reduce la verbosidad (menos lineas para obtener exactamente lo mismo)
+    - Nos permite escribir codigo mas limpio, mas corto y mas claro
+*/
+
+// Con arrays
+// Sin destructuring
+let nums = [1, 2, 3];
+let uno = nums[0];
+let dos = nums[1];
+
+// Con destructuring
+let [primero, segundo] = nums;
+console.log(primero); // 1
+console.log(segundo); // 2
+
+
+// Con objetos
+// Sin destructuring
+let persona = {nombre: "Marcos", edad: 30};
+let nom = persona.nombre;
+let ed = persona.edad;
+
+// Con destructuring
+// let persona = {nombre: "Marcos", edad: 30};
+let { nombre, edad } = persona;
+console.log(nombre); // Marcos
+console.log(edad); // 30
+
+// Usando destructuring en parametros de funcion
+function saludar({nombre, edad}) {
+    console.log(`Hola ${nombre}, tenes ${edad} años`);
+}
+
+saludar(persona); // Hola Marcos, tenes 30 años
+
+
+// Destructuring con valores omitidos
+let [prim, ,terc] = [10, 20, 30];
+console.log(prim, terc); // 10 30
+
+
+/*======================
+    Spread operator
+========================
+
+El Spread Operator o Operador de propagacion "..."
+Es una sintaxis introducida en ES6 que permite descomponer elementos iterables como arrays, strings y objetos en elementos individuales
+
+Su principal funcion es copiar, combinar o expandir estructuras de datos de forma eficiente
+*/
+
+// Copia superficial o Shallow Copy
+let original = [1, 2, 3];
+let copia = [...original];
+console.log(copia); // [1, 2, 3]
+
+/* Shallow Copy o Copia superficial en JavaScript
+
+Una copia superficial en JavaScript crea un nuevo objeto o matriz que copia las propiedades de nivel superior del original, pero los objetos o matrices anidados dentro de él siguen haciendo referencia a las mismas ubicaciones de memoria que el original. Esto significa que los cambios en las propiedades anidadas de la copia afectarán al objeto original, ya que comparten las mismas referencias. Métodos comunes como la sintaxis de propagación (`... `), `Object.assign()`, `Array.prototype.slice()`, `Array.prototype.concat()` y `Array.from()` producen copias superficiales
+
+    - Las copias superficiales solo duplican las propiedades de nivel superior; los objetos o matrices anidados no se copian de forma recursiva, por lo que sus referencias siguen siendo compartidas
+
+    - Reasignar propiedades de nivel superior en la copia no afecta al objeto original, pero modificar propiedades de objetos anidados en la copia reflejará los cambios en el original
+
+    - Este comportamiento puede provocar efectos secundarios no deseados, especialmente en estructuras de datos complejas o en la gestión de estados, lo que hace necesarias las copias profundas cuando se requiere una independencia completa entre objetos
+
+    - Aunque la copia superficial es más rápida y utiliza menos memoria, no es adecuada para situaciones en las que la inmutabilidad de los datos es fundamental
+*/
+
+// Concatenacion de arrays, mas eficiente que .concat()
+let arr1 = [1, 2];
+let arr2 = [3, 4];
+let combinado = [...arr1, ...arr2];
+console.log(combinado); // [1, 2, 3, 4]
+
+
+// Convertimos strings en arrays sin usar split('')
+let string = "Holis";
+let caracteres = [...string];
+console.log(caracteres); // (5) ['H', 'o', 'l', 'i', 's']
+
+
+// Combinacion de objetos
+let defaults = { tema: "oscuro", fontSize: 14 };
+let userSettings = { fontSize: 18 };
+let finalConfig = {...defaults, ...userSettings };
+console.log(finalConfig);
+
+
+/*========================
+    Funciones anidadas
+==========================
+
+Una funcion anidada es simplemente una funcion definida dentro de otra funcion
+Es decir, mas tecnicamente, una funcion interna que vive en el ambito lexico (scope) de una funcion externa. Es decir, una funcion anidada es una funcion que:
+
+    - Se declara dentro de otra funcion
+    - Tiene acceso a TODAS las variables y parametros de su funcion externa
+    - Puede ser utilizada para organizar mejor el codigo, modularizar la logica o crear closures
+
+Las funciones anidadas heredan el entorno lexico (lexical scope) de la funcion que las contiene. Heredan las variables de la funcion externa
+*/
+
+// Ejemplo 1
+function saluditos(nombre) {
+    function construirMensaje() {
+        return `Hola holiiita, ${nombre}`;
+    }
+
+    return construirMensaje();
+}
+
+console.log(saluditos("veciniiito")); // Hola holiiita veciniiito
+
+
+// Ejemplo 2, agrupando llamadas iniciales
+function obtenerData() {
+    console.log("Recibiendo data con un fetch");
+}
+
+function haciendoAlgo() {
+    console.log("Haciendo una cosa");
+}
+
+function calculandoCoso() {
+    console.log("Calculando el indice de lkajsdlkqj ldkjas");
+}
+
+// La funcion init centraliza todas las llamadas iniciales de una app en una llamada unica
+function init() {
+    obtenerData();
+    haciendoAlgo();
+    calculandoCoso();
+}
+
+init(); // De esta forma solo hacemos una unica llamada
+
+
+// Ejemplo 3, organizando el codigo, para que en lugar de hacer una gran funcion, definamos sub-funciones internas para modularizar la logica
+function procesarTexto(texto) {
+
+    function limpiar(t) {
+        return t.trim().toLowerCase();
+    }
+
+    function contarPalabras(t) {
+        return t.split(/\s+/).length; // Este REGEX nos permite contar todos los espacios, sean de uno, dos, tres o mas espacios
+    }
+
+    let textoLimpiado = limpiar(texto);
+
+    return contarPalabras(textoLimpiado);
+}
+
+console.log(procesarTexto("        Hola   holiiita veciniiito               como       va?          "));
+
+
+// TO DO, ejemplo de 2. Funciones "helper" privadas. 
+
+// TO DO, ejemplo 3: Generacion de Closures
+
+
+/* TO DO: 
+- Closures
+- Estudiar que son las HOF y su diferencia con los callbacks
+- Web APIs
+*/
